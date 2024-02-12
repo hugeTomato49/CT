@@ -28,9 +28,7 @@ const mutations = {
         state.yScale = payload
     }
 
-
 }
-
 
 const actions = {
     updateRowHeight({commit}, height) {

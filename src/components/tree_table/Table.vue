@@ -1,6 +1,6 @@
 <template>
     <div class="h-full w-3/4 p-3 pt-0">
-        <div class="w-full h-full rounded-md flex flex-col">
+        <div class="w-full h-full border-3 rounded-md flex flex-col overflow overflow-scroll" id="tableContainer">
             <div class="w-1/3 h-full">
                 <TSCard
                 v-for="node in linearizedTree"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import TSCard from './TSCard.vue'
 
@@ -38,6 +38,8 @@ export default {
         const selectionTree = computed(()=>store.getters['tree/selectionTree'])
         const seriesCollection = computed(()=>store.getters['tree/seriesCollection'])
 
+        const tableContainer = ref(null)
+
 
         watchEffect(()=> {
             linearizedTree.value = DFS(selectionTree.value)
@@ -49,9 +51,32 @@ export default {
             return seriesCollection.value.find(node => node.id ==id)?.seriesData??[]
         }
 
+        //scroll behavior
+        const handleScroll = () => {
+        store.dispatch('scroll/updateScrollPosition', {
+            x: tableContainer.value.scrollLeft,
+            y: tableContainer.value.scrollTop
+        });
+        }
+
+        watch(() => store.getters['scroll/scrollPosition'],
+        newPosition => {
+            tableContainer.value.scrollLeft = newPosition.x;
+            tableContainer.value.scrollTop = newPosition.y;
+        }
+    )
+
+        onMounted(() => {
+            tableContainer.value = document.querySelector('#tableContainer')
+            tableContainer.value.addEventListener('scroll', handleScroll);
+        })
+
+
+
         return {
             linearizedTree,
             findSeriesData,
+            tableContainer
         }
 
 

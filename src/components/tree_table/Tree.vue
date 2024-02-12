@@ -1,7 +1,7 @@
 <template>
     <div class="p-3 h-full w-1/4 pt-0">
         <div class="w-full h-full border-3 rounded-md overflow overflow-scroll" id="treeContainer">
-            <svg class="w-full h-full" :height="linearizedTree.length * treeContainer?.offsetHeight / 20">
+            <svg class="w-full" :height="linearizedTree.length * treeContainer?.offsetHeight / 20">
                 <Node 
                 v-for="(node, index) in linearizedTree"
                 :key = node.node_name
@@ -27,7 +27,7 @@
 
 <script>
 import { useStore } from "vuex"
-import { computed, ref, onMounted, onUnmounted, watchEffect } from "vue"
+import { computed, ref, onMounted, onUnmounted, watchEffect, watch } from "vue"
 import { DFS, calculateEdges } from "../../computation/treeComputation"
 
 import Node from "./Node.vue"
@@ -62,12 +62,32 @@ export default {
 
 
 
+        //scroll_bahaviour
+        const handleScroll = () => {
+        store.dispatch('scroll/updateScrollPosition', {
+            x: treeContainer.value.scrollLeft,
+            y: treeContainer.value.scrollTop
+        });
+        }
+
+        watch(() => store.getters['scroll/scrollPosition'],
+        newPosition => {
+            treeContainer.value.scrollLeft = newPosition.x;
+            treeContainer.value.scrollTop = newPosition.y;
+            // //check
+            // console.log("check position")
+            // console.log(newPosition.x)
+        })
+
+
+
+
+
         onMounted(()=>{
             treeContainer.value = document.querySelector("#treeContainer")
             const rowHeight = treeContainer.value?.offsetHeight / 20
             store.dispatch('size/updateRowHeight', rowHeight)
-            // console.log("CHECK rowHeight")
-            // console.log(rowHeight)
+            treeContainer.value.addEventListener('scroll', handleScroll);
         })
 
         return {
