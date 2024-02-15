@@ -1,6 +1,7 @@
 import axios from "axios"
 import { cloneDeep } from 'lodash'
-import { transformData } from "../computation/basicComputation"
+import { transformData, filterDataByTimeRange } from "../computation/basicComputation"
+
 
 
 const state = {
@@ -8,7 +9,8 @@ const state = {
     selectionTree : [], 
     seriesCollection: [],
     dataset: 'PV',
-    pv_levels: ['Transformer', 'Converter', 'Line']
+    pv_levels: ['Transformer', 'Converter', 'Line'],
+    timeRange: []
     
 
 }
@@ -26,6 +28,9 @@ const mutations = {
         console.log("CHECK Series Collection")
         console.log(payload)
         state.seriesCollection = payload
+    },
+    UPDATE_TIME_RANGE(state, payload){
+      state.timeRange = payload
     }
 
 }
@@ -51,6 +56,21 @@ const actions = {
         dispatch('size/updateScale', newSeriesCollection, {root : true})
         
       })
+    },
+    updateTimeRange({commit, dispatch}, newTimeRange) {
+      commit('UPDATE_TIME_RANGE', newTimeRange)
+      dispatch('filterSeriesCollectionByTimeRange', newTimeRange)
+
+    },
+    filterSeriesCollectionByTimeRange({state, commit, dispatch}, newTimeRange){
+      let currentSeriesCollection = state.seriesCollection.map(node => {
+        return {
+          ...node,
+          seriesData: filterDataByTimeRange(node['seriesData'], newTimeRange)
+        }
+      })
+      commit('UPDATE_SERIES_COLLECTION', currentSeriesCollection)
+      dispatch('size/updateScale', currentSeriesCollection, {root : true})
     },
     // fold and unfold operation
     selectNodeAndChildren({state, dispatch}, id) {
@@ -132,7 +152,8 @@ const getters = {
     selectionTree: state => state.selectionTree,
     seriesCollection: state => state.seriesCollection,
     dateset: state => state.dataset,
-    pv_levels: state => state.pv_levels
+    pv_levels: state => state.pv_levels,
+    timeRange: state => state.timeRange
 
 
 }

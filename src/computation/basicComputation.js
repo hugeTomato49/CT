@@ -18,6 +18,10 @@ export const transformData = (rawData) => {
     });
 }
 
+export const filterDataByTimeRange = (data,timeRange) => {
+    return data.filter(d => {return d.Time >= timeRange[0] && d.Time <= timeRange[1]})
+}
+
 
 
 export const getMax = (manySeries) => {
