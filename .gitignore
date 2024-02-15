@@ -1,2 +1,5 @@
 node_modules
 backend/data
+api/*.json
+api/*.ipynb
+__pycache__/
