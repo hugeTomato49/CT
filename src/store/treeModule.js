@@ -7,7 +7,8 @@ const state = {
     originalTree : [],
     selectionTree : [], 
     seriesCollection: [],
-    dataset: 'PV'
+    dataset: 'PV',
+    pv_levels: ['Transformer', 'Converter', 'Line']
     
 
 }
@@ -130,7 +131,8 @@ const getters = {
     originalTree: state => state.originalTree,
     selectionTree: state => state.selectionTree,
     seriesCollection: state => state.seriesCollection,
-    dateset: state => state.dataset
+    dateset: state => state.dataset,
+    pv_levels: state => state.pv_levels
 
 
 }
