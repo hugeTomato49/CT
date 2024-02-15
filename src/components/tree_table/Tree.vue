@@ -1,21 +1,21 @@
 <template>
-    <div class="p-3 h-full w-1/4 pt-0">
+    <div class="p-2 h-full w-1/3 pt-0">
         <div class="w-full h-full border-3 rounded-md overflow overflow-scroll" id="treeContainer">
-            <svg class="w-full" :height="linearizedTree.length * treeContainer?.offsetHeight / 20">
+            <svg class="w-full" :height="linearizedTree.length * treeContainer?.offsetHeight * rowPercentage">
                 <Node 
                 v-for="(node, index) in linearizedTree"
                 :key = node.node_name
                 :nodeData = node
                 :index = index
-                :rowHeight = "treeContainer?.offsetHeight / 20 " 
-                :columnWidth = "treeContainer?.offsetWidth * 0.2" 
+                :rowHeight = "treeContainer?.offsetHeight * rowPercentage" 
+                :columnWidth = "treeContainer?.offsetWidth * 0.25" 
                 />
                 <Edge 
                 v-for="edge in edges"
                 :key = edge.endIndex
                 :edge = edge
-                :rowHeight = "treeContainer?.offsetHeight / 20" 
-                :columnWidth = "treeContainer?.offsetWidth * 0.2" 
+                :rowHeight = "treeContainer?.offsetHeight * rowPercentage" 
+                :columnWidth = "treeContainer?.offsetWidth * 0.25" 
                 />
             </svg>
 
@@ -43,7 +43,7 @@ export default {
     setup() {
         //rendering parameter
         const treeContainer = ref(null)
-        const rowHeight = ref(40)
+        const rowPercentage = ref(0.045)
 
         //rendered data
         const store = useStore()
@@ -85,7 +85,7 @@ export default {
 
         onMounted(()=>{
             treeContainer.value = document.querySelector("#treeContainer")
-            const rowHeight = treeContainer.value?.offsetHeight / 20
+            const rowHeight = treeContainer.value?.offsetHeight * rowPercentage.value
             store.dispatch('size/updateRowHeight', rowHeight)
             treeContainer.value.addEventListener('scroll', handleScroll);
         })
@@ -94,6 +94,7 @@ export default {
             linearizedTree,
             edges,
             treeContainer,
+            rowPercentage
             // rowHeight,
             // columnWidth
         }

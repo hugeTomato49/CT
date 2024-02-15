@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full w-3/4 p-3 pt-0">
+    <div class="h-full w-2/3 p-2 pt-0">
         <div class="w-full h-full border-3 rounded-md flex flex-col overflow overflow-scroll" id="tableContainer">
             <div class="w-1/3 h-full">
                 <TSCard

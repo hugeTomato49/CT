@@ -1,19 +1,20 @@
 <template>
-    <div class="h-1/7 flex flex-row">
-        <EntitySelectionPanel />
+    <div class="h-1/6 flex flex-row">
+        <TreeHeader />
         <EntityManagementPanel />
     </div>
 
 </template>
 
 <script>
-import EntitySelectionPanel from './entity_list/EntitySelectionPanel.vue';
+
 import EntityManagementPanel from './entity_list/EntityManagementPanel.vue';
+import TreeHeader from './entity_list/TreeHeader.vue';
 export default {
     name: 'EntityList',
     components: {
-        EntitySelectionPanel,
-        EntityManagementPanel
+        EntityManagementPanel,
+        TreeHeader
     }
 }
 

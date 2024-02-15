@@ -1,5 +1,5 @@
 <template>
-    <div class="w-29/30 p-2 pl-1">
+    <div class="w-2/3 p-2 ">
         <div class="w-full h-full rounded-md border-3">
 
         </div>
