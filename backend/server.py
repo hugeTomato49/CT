@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, make_response
 import os
 import json  
+import compute.filter
+import importlib
+importlib.reload(compute.filter)
 app = Flask(__name__)
 
 PV_data_folder_path = "data/PV"
@@ -55,6 +58,50 @@ def getSeriesCollection():
             collection.append(object)
     
     return {"seriesCollection": collection}
+
+@app.route('/coordinateCollection', methods=["POST"])
+def getCoordinateCollection():
+    data = request.get_json()
+    dataset = data.get("dataset","")
+    level_id_list = data.get("level_id_list",[])
+    timeRange = data.get("timeRange",[])
+    print("CHECK")
+    print(timeRange)
+    
+    if dataset == "PV":
+        file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, PV_tree_file_name)
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                pv_tree_data = json.load(file) 
+        
+        collection = {}
+        for level_id in level_id_list:
+            object = {}
+            node_list = []
+            # find nodes in pv_tree_data whose level equals to level_id
+            for node in pv_tree_data:
+                if node["level"] == level_id:
+                    node_list.append(node)
+            
+            for node in node_list:
+                data_file_name = node["node_name"] + ".json"
+                if node["id"] == 1:
+                    data_file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, data_file_name)
+                    with open(data_file_path, 'r') as file:
+                        object[node["id"]] = compute.filter.filterDataByTimeRange(json.load(file)["data"], timeRange)
+
+                else:
+                    data_folder_path = list(node["node_name"].split("-"))[-2]
+                    data_file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, data_folder_path, data_file_name)
+                    with open(data_file_path, 'r') as file:
+                        object[node["id"]] = compute.filter.filterDataByTimeRange(json.load(file)["data"], timeRange)
+            
+            collection[level_id] = object
+   
+
+                
+            
+
         
         
     

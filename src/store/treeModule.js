@@ -60,6 +60,7 @@ const actions = {
     updateTimeRange({commit, dispatch}, newTimeRange) {
       commit('UPDATE_TIME_RANGE', newTimeRange)
       dispatch('filterSeriesCollectionByTimeRange', newTimeRange)
+      dispatch('scatterPlot/getCoordinateCollection',null, {root:true})
 
     },
     filterSeriesCollectionByTimeRange({state, commit, dispatch}, newTimeRange){

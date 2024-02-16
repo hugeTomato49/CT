@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 import { groupData } from "../computation/basicComputation"
-import { scales } from "../scale/scale" 
+import { TS_Scales } from "../scale/scale" 
 
 const state = {
     rowHeight: 0,
@@ -42,8 +42,8 @@ const actions = {
     },
     updateScale({state, commit}, seriesCollection) {
         const data_list = groupData(seriesCollection)
-        const x_scale = scales(data_list[0], state.cardWidth, state.cardHeight).xScale
-        const y_scale_list = data_list.map(data => scales(data, state.cardWidth, state.cardHeight).yScale)
+        const x_scale = TS_Scales(data_list[0], state.cardWidth, state.cardHeight).xScale
+        const y_scale_list = data_list.map(data => TS_Scales(data, state.cardWidth, state.cardHeight).yScale)
         commit('UPDATE_X_SCALE', x_scale)
         commit('UPDATE_Y_SCALE', y_scale_list)  
     } 

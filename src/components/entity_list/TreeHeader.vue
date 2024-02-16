@@ -11,7 +11,6 @@
                     <div class="h-full flex flex-row items-center" :style="{ width: headerContainer?.offsetWidth * 0.25 - 10 + 'px' , backgroundColor: colorBar[index]}">
                         <div class="ml-5px text-md font-serif">{{ level_name }}</div>
                         <div class="h-full flex-1"></div>
-
                     </div>
                     <div class="h-full px-0.5px" :style="{ width: 10 + 'px' }">
                         <div class="bg-blue-100 h-full w-full "></div>
@@ -19,25 +18,27 @@
                 </div>
             </div>
             <div class="w-full h-6/7  py-1">
-                <svg class="w-full h-full">
-                    <g 
-                    v-for="(level_name, index) in level_name_list"
-                    :key="level_name"
-                    class="h-full" 
-                    :transform="'translate(' + (headerContainer?.offsetWidth * 0.25 * index) + ', 0)'"
-                    >
-                        <rect
-                        x="0"
-                        y="0"
-                        :width="headerContainer?.offsetWidth * 0.25 - 10"
-                        height="100%"
-                        stroke="#e5e7eb" 
-                        stroke-width="2"
-                        fill="none"
-                        rx="5" 
-                        ></rect>
-                    </g>
-                </svg>
+                <div class="w-full h-full" id="plotContainer">
+                    <svg class="w-full h-full">
+                        <g 
+                        v-for="(level_name, index) in level_name_list"
+                        :key="level_name"
+                        class="h-full" 
+                        :transform="'translate(' + (headerContainer?.offsetWidth * 0.25 * index) + ', 0)'"
+                        >
+                            <rect
+                            x="0"
+                            y="0"
+                            :width="headerContainer?.offsetWidth * 0.25 - 10"
+                            height="100%"
+                            stroke="#e5e7eb" 
+                            stroke-width="2"
+                            fill="none"
+                            rx="5" 
+                            ></rect>
+                        </g>
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -55,6 +56,7 @@ export default {
     name: 'TreeHeader',
     setup() {
         const headerContainer = ref(null)
+        const plotContainer = ref(null)
         const store = useStore()
         const colorBar = ref(["#F17F8C", "#B3D1EC", "#F7D24F"])
 
@@ -66,11 +68,18 @@ export default {
 
         onMounted(()=> {
             headerContainer.value = document.querySelector("#treeContainer")
+            plotContainer.value = document.querySelector("#plotContainer")
+            store.dispatch('scatterPlot/updatePlotWidth', headerContainer.offsetWidth * 0.25 - 10)
+            store.dispatch('scatterPlot/updatePlotHeight', plotContainer.value.offsetHeight)
+
+
+            
 
         })
 
         return {
             headerContainer,
+            plotContainer,
             level_id_list,
             level_name_list,
             colorBar
