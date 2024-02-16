@@ -1,6 +1,6 @@
 <template>
-    <div class="p-2 h-full w-1/3 pt-0">
-        <div class="w-full h-full border-3 rounded-md overflow overflow-scroll" id="treeContainer">
+    <div class="p-2 h-full w-2/5 pt-0">
+        <div class="w-full h-full rounded-md overflow overflow-scroll" id="treeContainer">
             <svg class="w-full" :height="linearizedTree.length * treeContainer?.offsetHeight * rowPercentage">
                 <Node 
                 v-for="(node, index) in linearizedTree"
@@ -43,7 +43,7 @@ export default {
     setup() {
         //rendering parameter
         const treeContainer = ref(null)
-        const rowPercentage = ref(0.045)
+        const rowPercentage = ref(0.04)
 
         //rendered data
         const store = useStore()

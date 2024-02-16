@@ -12,7 +12,7 @@ import NavigationBar from "./components/NavigationBar.vue"
 import EntityList from "./components/EntityList.vue"
 import ChronoTable from "./components/ChronoTable.vue"
 import { useStore } from "vuex"
-import { onMounted } from "vue"
+
 export default {
   name: 'App',
   components: {

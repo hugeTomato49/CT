@@ -1,5 +1,5 @@
 <template>
-    <div class="h-1/6 flex flex-row">
+    <div class="h-1/5 flex flex-row">
         <TreeHeader />
         <EntityManagementPanel />
     </div>

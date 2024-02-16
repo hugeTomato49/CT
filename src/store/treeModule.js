@@ -9,7 +9,7 @@ const state = {
     selectionTree : [], 
     seriesCollection: [],
     dataset: 'PV',
-    pv_levels: ['Transformer', 'Converter', 'Line'],
+    levels: ['Transformer', 'Converter', 'Line'],
     timeRange: []
     
 
@@ -49,7 +49,7 @@ const actions = {
         const newSeriesCollection = response.data.seriesCollection.map(node => {
           return {
             ...node,
-            seriesData: transformData(node.seriesData)
+            seriesData: filterDataByTimeRange(transformData(node.seriesData),state.timeRange)
           }
         })
         commit("UPDATE_SERIES_COLLECTION", newSeriesCollection)
@@ -63,6 +63,7 @@ const actions = {
 
     },
     filterSeriesCollectionByTimeRange({state, commit, dispatch}, newTimeRange){
+
       let currentSeriesCollection = state.seriesCollection.map(node => {
         return {
           ...node,
@@ -71,6 +72,7 @@ const actions = {
       })
       commit('UPDATE_SERIES_COLLECTION', currentSeriesCollection)
       dispatch('size/updateScale', currentSeriesCollection, {root : true})
+      
     },
     // fold and unfold operation
     selectNodeAndChildren({state, dispatch}, id) {
@@ -152,7 +154,7 @@ const getters = {
     selectionTree: state => state.selectionTree,
     seriesCollection: state => state.seriesCollection,
     dateset: state => state.dataset,
-    pv_levels: state => state.pv_levels,
+    levels: state => state.levels,
     timeRange: state => state.timeRange
 
 

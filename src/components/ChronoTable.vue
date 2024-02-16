@@ -1,5 +1,5 @@
 <template>
-    <div class="h-113/140 flex flex-row">
+    <div class="h-23/30 flex flex-row">
         <Tree />
         <Table />
 

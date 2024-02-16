@@ -19,10 +19,14 @@ export const transformData = (rawData) => {
 }
 
 export const filterDataByTimeRange = (data,timeRange) => {
-    return data.filter(d => {return d.Time >= timeRange[0] && d.Time <= timeRange[1]})
+    if (timeRange.length == 2){
+        return data.filter(d => {return d.Time >= timeRange[0] && d.Time <= timeRange[1]})
+    }
+    else {
+        return data
+    }
+    
 }
-
-
 
 export const getMax = (manySeries) => {
     let max = -Infinity;
