@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, make_response
 import os
 import json  
-import compute.filter
-import importlib
-importlib.reload(compute.filter)
+from compute.filter import filterDataByTimeRange
+from compute.dr import mds_to2d
+
 app = Flask(__name__)
 
 PV_data_folder_path = "data/PV"
@@ -65,8 +65,8 @@ def getCoordinateCollection():
     dataset = data.get("dataset","")
     level_id_list = data.get("level_id_list",[])
     timeRange = data.get("timeRange",[])
-    print("CHECK")
-    print(timeRange)
+    # print("CHECK")
+    # print(timeRange)
     
     if dataset == "PV":
         file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, PV_tree_file_name)
@@ -88,24 +88,21 @@ def getCoordinateCollection():
                 if node["id"] == 1:
                     data_file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, data_file_name)
                     with open(data_file_path, 'r') as file:
-                        object[node["id"]] = compute.filter.filterDataByTimeRange(json.load(file)["data"], timeRange)
+                        object[node["id"]] = filterDataByTimeRange(json.load(file)["data"], timeRange)
 
                 else:
                     data_folder_path = list(node["node_name"].split("-"))[-2]
                     data_file_path = os.path.join(os.path.dirname(__file__),PV_data_folder_path, data_folder_path, data_file_name)
                     with open(data_file_path, 'r') as file:
-                        object[node["id"]] = compute.filter.filterDataByTimeRange(json.load(file)["data"], timeRange)
-            
-            collection[level_id] = object
+                        object[node["id"]] = filterDataByTimeRange(json.load(file)["data"], timeRange)
+                         
+            result = mds_to2d(object)
+            collection[level_id] = result
+        
+        print(collection)
+        return {"coordinateCollection":collection}
+    
    
-
-                
-            
-
-        
-        
-    
-    
 
 if __name__ == "__main__":
     app.run(port=3000, debug=True)

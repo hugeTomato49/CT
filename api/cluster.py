@@ -7,7 +7,7 @@
 '''
 import json
 import numpy as np
-from jsonTransfer import TSjson_exp
+from backend.compute.jsonTransfer import TSjson_exp
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
 

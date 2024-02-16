@@ -36,6 +36,12 @@
                             fill="none"
                             rx="5" 
                             ></rect>
+                            <!-- 用circle渲染
+                            <circle
+                            v-for = "coordinates in coordinateCollection[level_id_list[index]]"
+                            ></circle> -->
+
+                            
                         </g>
                     </svg>
                 </div>
@@ -59,6 +65,8 @@ export default {
         const plotContainer = ref(null)
         const store = useStore()
         const colorBar = ref(["#F17F8C", "#B3D1EC", "#F7D24F"])
+
+        //step2: 取对应的scale和coordindateCollection数据
 
 
         const selectionTree = computed(() => store.getters["tree/selectionTree"])

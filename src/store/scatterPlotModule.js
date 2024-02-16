@@ -35,12 +35,28 @@ const actions = {
         const level_id_list = [...new Set(rootState.tree.selectionTree.map(node => node.level))]
         const timeRange = rootState.tree.timeRange
         axios.post('/api/coordinateCollection', {"dataset":dataset, "level_id_list": level_id_list, "timeRange": timeRange}).then((response) => {
-            commit('UPDATE_COORDINATE_COLLECTION', response.data.coordinateCollection)
+            // console.log("check MDS result")
+            // console.log(response.data.coordinateCollection)
+            commit('UPDATE_COORDINATE_COLLECTION', response.data.coordinateCollection) 
         })
-        dispatch('updatePlotScale',state.coordinateCollection)
+        dispatch('updatePlotScale')  // step 1: use updated result of MDS coordinates to update computed scales(for each level)
 
     },
-    updatePlotScale({state, commit}, coordinateCollection){
+    updatePlotScale({state, commit}){
+        // still step 1: update scale
+        const coordinateCollection = state.coordinateCollection
+        //the format of coordinateCollection: 
+        //{
+        //  level_id1: 
+        //      [{node_id:?, x:?, y:?}, ...]},
+        //  level_id2: 
+        //      [{node_id:?, x:?, y:?}, ...]},
+        //  ...
+        // }
+        // write a function in scale/scale.js using coordinates of each level, and plotHeight, plotWidth
+        // import function to return multiple scales(每一个level一个xy scale), commit UPDATE_PLOT_X_SCALE and Y ...
+        
+
 
 
     },

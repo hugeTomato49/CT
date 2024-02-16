@@ -63,3 +63,12 @@ export const TS_Scales = (data,width,height) => {
    
     return { xScale,yScale }
 }
+
+
+export const PLOT_Scale = (data,width,height) => {
+    //因为涉及到x,y有负数，所以max,min都要求，然后取绝对值最大的那个,用它的正负作为最终的max,min
+    //只return一个XY scale, 对于level的遍历在updateScale里
+    return {}
+
+}
+

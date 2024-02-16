@@ -7,7 +7,7 @@
 '''
 import pandas as pd
 import numpy as np
-from jsonTransfer import TSjson_exp
+from backend.compute.jsonTransfer import TSjson_exp
 
 def pearson_cal(json_data):
     '''
