@@ -3,3 +3,4 @@ backend/data
 api/*.json
 api/*.ipynb
 __pycache__/
+/dist
