@@ -2,7 +2,7 @@
 @Description: scaling the data to 2d with the mode applied
 @Author: Nemo
 @Date: 2024-02-14 16:26:37
-@LastEditTime: 2024-02-14 21:39:55
+@LastEditTime: 2024-02-16 19:26:56
 @LastEditors: Nemo
 '''
 import numpy as np
@@ -10,7 +10,14 @@ from sklearn.manifold import MDS
 from jsonTransfer import TSjson_exp
 
 def mds_to2d(json_data, mode='similarity'):
-
+    '''
+    @description: sclaing the data to 2d with mds method.
+    @Author: Nemo
+    @Date: 2024-02-16 19:21:43
+    @return {*} return list as [{id: key ,x: , y: }, ... ]
+    @param {*} json_data: data input.
+    @param {*} mode: to scaling by 'similarity' or 'correlation'.
+    '''
     keys, datas = TSjson_exp(json_data)
     tmpData = datas[:, 1:].T.astype('float')
 
@@ -28,4 +35,9 @@ def mds_to2d(json_data, mode='similarity'):
     mds = MDS(n_components=2, dissimilarity='precomputed')
     data_to2d = mds.fit_transform(distance_matrix)
 
-    return keys, data_to2d
+    result_list = []
+    # print(len(data_to2d))
+    for i in range(len(data_to2d)):
+        result_list.append({'id':keys[i+1], 'x':data_to2d[i][0], 'y':data_to2d[i][1]})
+
+    return result_list

@@ -2,7 +2,7 @@
 @Description: a file define the cluster function.
 @Author: Nemo
 @Date: 2024-01-31 15:19:43
-@LastEditTime: 2024-02-15 11:21:14
+@LastEditTime: 2024-02-16 19:50:26
 @LastEditors: Nemo
 '''
 import json
@@ -48,26 +48,33 @@ def cluster_kmeans(json_data, n):
         print("Data Error _01")
         return ''
 
-def cluster_dbscan(keys, data_2d, eps=0.4, min_samples=2):
+def cluster_dbscan(data_list, eps=0.4, min_samples=2):
     '''
     @description: function of dbscan to 2d datas and return the labels in json.
     @Author: Nemo
-    @Date: 2024-02-15 11:06:51
+    @Date: 2024-02-16 19:32:54
     @return {*} return json file as {cluster id: [node_id], ...}
-    @param {*} keys: the keys of 2d datas.
-    @param {*} data_2d: the input 2d datas.
+    @param {*} data_list: the result_list of mds_to2d funtion.
     @param {*} eps: the radius of dbscan algorithm.
     @param {*} min_samples: the min number of samples in each cluster.
     '''
+    keys = []
+    data_2d = []
+    for i in range(len(data_list)):
+        keys.append(data_list[i]['id'])
+        data_2d.append([data_list[i]['x'], data_list[i]['y']])
+    data_2d = np.array(data_2d, dtype=np.float32)
+
     dbscan = DBSCAN(eps, min_samples)
     labels = dbscan.fit_predict(data_2d)
+
     result_dict = {}
     for i in range(len(data_2d)):
         j = labels[i]+1
         if str(j) in result_dict:
-            result_dict[str(j)].append(keys[i+1])
+            result_dict[str(j)].append(keys[i])
         else:
-            result_dict.update({str(j):[keys[i+1]]})
+            result_dict.update({str(j):[keys[i]]})
     json_string = json.dumps(result_dict)
     
     return json_string
