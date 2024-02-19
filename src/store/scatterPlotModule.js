@@ -28,8 +28,6 @@ const mutations =  {
         console.log("Check CC")
         console.log(payload)
     },
-
-
 }
 
 const actions = {
