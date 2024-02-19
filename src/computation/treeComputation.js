@@ -34,3 +34,19 @@ export const calculateEdges = (tree) => {
     })
     return edges
 }
+
+
+export const calculatePlotLinks = (id, originalTree, coordinateCollection) => {
+//     return [
+//         {
+//         "start_id": 1,
+//         "end_id": 2,
+//         "start_x": 0,
+//         "start_y": 0,
+//         "end_x": 0,
+//         "end_y": 0,
+//     },
+//     ...
+// ]
+
+}
