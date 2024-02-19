@@ -64,7 +64,7 @@ export default {
         const headerContainer = ref(null)
         const plotContainer = ref(null)
         const store = useStore()
-        const colorBar = ref(["#F17F8C", "#B3D1EC", "#F7D24F"])
+        const colorBar = ref(["#F17F8C", "#B3D1EC", "#B3DFBD"])
 
         //step2: 取对应的scale和coordindateCollection数据
 
