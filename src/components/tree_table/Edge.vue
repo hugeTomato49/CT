@@ -5,8 +5,8 @@
     fill="none"
     :d="
     `M ${(edge.startLevel-1) * columnWidth + columnWidth/2} ${rowHeight/2 + edge.startIndex * rowHeight + 10} 
-    L ${(edge.startLevel-1) * columnWidth + columnWidth/2} ${rowHeight/2 + edge.endIndex * rowHeight }  
-    Q ${(edge.startLevel-1) * columnWidth + columnWidth/2} ${rowHeight/2 + edge.endIndex * rowHeight }  ${(edge.startLevel-1) * columnWidth + columnWidth/2 } ${rowHeight/2 + edge.endIndex * rowHeight}  
+    L ${(edge.startLevel-1) * columnWidth + columnWidth/2} ${rowHeight/2 + edge.endIndex * rowHeight  - 5}  
+    Q ${(edge.startLevel-1) * columnWidth + columnWidth/2 } ${rowHeight/2 + edge.endIndex * rowHeight }  ${(edge.startLevel-1) * columnWidth + columnWidth/2 + 5} ${rowHeight/2 + edge.endIndex * rowHeight}  
     L ${(edge.endLevel-1) * columnWidth + columnWidth/2 -10} ${rowHeight/2 + edge.endIndex * rowHeight }`"
     >
     </path>

@@ -67,12 +67,21 @@ import { useStore } from "vuex";
 import { computed, ref, onMounted } from "vue";
 
 export default {
+<<<<<<< HEAD
   name: "TreeHeader",
   setup() {
     const headerContainer = ref(null);
     const plotContainer = ref(null);
     const store = useStore();
     const colorBar = ref(["#F17F8C", "#B3D1EC", "#F7D24F"]);
+=======
+    name: 'TreeHeader',
+    setup() {
+        const headerContainer = ref(null)
+        const plotContainer = ref(null)
+        const store = useStore()
+        const colorBar = ref(["#F17F8C", "#B3D1EC", "#B3DFBD"])
+>>>>>>> 826cb207a3a8abc2fc07804d9b3cd869f1621615
 
     //step2: 取对应的scale和coordindateCollection数据
     const plot_X_Scale = computed(

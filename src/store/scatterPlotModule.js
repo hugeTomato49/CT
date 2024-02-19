@@ -6,7 +6,8 @@ const state = {
     plotHeight: 0,
     plot_X_Scale: [],
     plot_Y_Scale: [],
-    coordinateCollection: []
+    coordinateCollection: [],
+    plotLinks: []
 
 }
 
@@ -25,9 +26,9 @@ const mutations = {
     },
     UPDATE_COORDINATE_COLLECTION(state, payload) {
         state.coordinateCollection = payload
+        console.log("Check CC")
+        console.log(payload)
     },
-
-
 }
 
 const actions = {
@@ -38,12 +39,20 @@ const actions = {
         axios.post('/api/coordinateCollection', { "dataset": dataset, "level_id_list": level_id_list, "timeRange": timeRange }).then((response) => {
             // console.log("check MDS result")
             // console.log(response.data.coordinateCollection)
+<<<<<<< HEAD
             commit('UPDATE_COORDINATE_COLLECTION', response.data.coordinateCollection)
             dispatch('updatePlotScale')
         })
         console.log("CoordinateCollection is",state.coordinateCollection)
           // step 1: use updated result of MDS coordinates to update computed scales(for each level)
         
+=======
+            commit('UPDATE_COORDINATE_COLLECTION', response.data.coordinateCollection) 
+            dispatch('updatePlotScale')  // step 1: use updated result of MDS coordinates to update computed scales(for each level)
+        })
+        
+
+>>>>>>> 826cb207a3a8abc2fc07804d9b3cd869f1621615
     },
     updatePlotScale({ state, commit }) {
         // still step 1: update scale
@@ -98,7 +107,8 @@ const getters = {
     plotHeight: state => state.plotHeight,
     plot_X_Scale: state => state.plot_X_Scale,
     plot_Y_Scale: state => state.plot_Y_Scale,
-    coordinateCollection: state => state.coordinateCollection
+    coordinateCollection: state => state.coordinateCollection,
+    plotLinks: state => state.plotLinks
 
 
 }
