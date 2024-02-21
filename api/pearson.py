@@ -2,12 +2,12 @@
 @Description: a file define the pearson correlation coefficient function.
 @Author: Nemo
 @Date: 2024-01-31 15:19:43
-@LastEditTime: 2024-01-31 18:30:54
+@LastEditTime: 2024-02-20 17:54:55
 @LastEditors: Nemo
 '''
 import pandas as pd
 import numpy as np
-from backend.compute.jsonTransfer import TSjson_exp
+from jsonTransfer import TSjson_exp
 
 def pearson_cal(json_data):
     '''
